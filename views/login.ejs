@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="login-form" action="/login" method="post" class="login-form">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email" required style="width: 200px;">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required style="width: 200px;">
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="/register">Create one here</a></p>
+        
+        <!-- Error message container -->
+        <div id="error-message"></div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessageDiv = document.getElementById('error-message');
+
+            const formData = new URLSearchParams();
+            formData.append('email', email);
+            formData.append('password', password);
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData.toString()
+                });
+
+                if (response.status === 401) {
+                    // Vulnerable Dom XSS 
+                    errorMessageDiv.innerHTML = `Email ${email} or password is incorrect.`;
+                    errorMessageDiv.style.color = 'red';
+                } else if (response.ok) {
+                    window.location.href = '/items';
+                }else{
+                    const errorMessage = await response.text(); // Get error message from the backend
+                    console.error("Backend Error:", errorMessage); // Log it in the browser console for debugging
+
+                    // Display the error message from the backend
+                    errorMessageDiv.innerHTML = `Error: ${errorMessage}`;
+                    errorMessageDiv.style.color = 'red';
+                }
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                errorMessageDiv.innerHTML = 'An error occurred. Please try again.';
+                errorMessageDiv.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

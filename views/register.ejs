@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="register-form" action="/register" method="post"  class="register-form">
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Email" required style="width: 200px;">
+            <label for="username">Username</label>
+            <input type="text" name="username" placeholder="Username" required style="width: 200px;">
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Password" required style="width: 200px;">
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="/login">Log in here</a></p>
+        <!-- Error message container -->
+        <div id="error-message"></div>
+    </div>
+    <script>
+       document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = new URLSearchParams(new FormData(e.target));
+            
+            const errorMessageDiv = document.getElementById('error-message');
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
+                });
+    
+                // Check if the response is not OK (e.g., status 500)
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error("Backend Error:", errorText);
+
+                    // Display the error message from the backend
+                    errorMessageDiv.innerHTML = `Error: ${errorText}`;
+                    errorMessageDiv.style.color = 'red';
+                } else {
+                    // Redirect if registration is successful
+                    window.location.href = '/items';
+                }
+            } catch (error) {
+                console.error('Unexpected error:', error);
+                errorMessageDiv.innerHTML = 'An unexpected error occurred. Please try again.';
+                errorMessageDiv.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

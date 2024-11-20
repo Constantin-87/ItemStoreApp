@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items List</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container-large">
+        <div class="header">
+            <h2>Welcome, <%= username %>!</h2>
+
+            <% if (role === 'admin') { %>
+                <!-- Admin Button -->
+                <a href="/admin" class="admin-button">Administration</a>
+            <% } %>
+
+            <form action="/logout" method="post" style="display: inline;">
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+        
+        <!-- Add Items Form -->
+        <form action="/items/add" method="post" class="item-form">
+            <label class="form-label">Add Items:</label>
+            <input type="text" name="name" placeholder="Item Name" required style="width: 150px;">
+            <input type="number" name="quantity" placeholder="Quantity" required style="width: 100px;">
+            <button type="submit">Add Item</button>
+        </form>
+
+        <!-- Search Bar -->
+        <form action="/items/search" method="get" class="item-form">
+            <label class="form-label">Search Items:</label>
+            <input type="text" name="query" placeholder="Search by name" style="width: 200px;" value="<%= query %>">
+            <button type="submit">Search</button>
+        </form>
+
+        <h2>All Items</h2>
+        <table class="items-table">
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+            <% if (items && items.length > 0) { %>
+                <% items.forEach(item => { %>
+                    <tr>
+                        <form action="/items/edit/<%= item.id %>" method="post" style="display: flex; align-items: center;">                            
+                            <td>
+                                <!-- Vulnerable to Stored XSS -->
+                                <%- item.name %>
+                            </td>
+                            <td>
+                                <input type="number" name="quantity" value="<%= item.quantity %>" style="width: 100px;">
+                            </td>
+                            
+                            <!-- Actions: Update and Delete buttons -->
+                            <td>
+                                <button type="submit">Update</button>
+                                
+                                <button formaction="/items/delete/<%= item.id %>" formmethod="post" class="delete-button">
+                                    Delete
+                                </button>
+                            </td>
+                        </form>
+                    </tr>
+                <% }) %>
+                <% } else if (query && query.trim() !== '') { %>
+                    <tr>
+                        <!-- Vulnerable to Reflected XSS -->
+                        <td colspan="3">Could not find an item named "<%- query %>".</td>
+                    </tr>
+                <% } %>
+        </table>
+    </div>
+</body>
+</html>
