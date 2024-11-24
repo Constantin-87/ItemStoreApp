@@ -17,12 +17,14 @@
             <% } %>
 
             <form action="/logout" method="post" style="display: inline;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button type="submit" class="logout-button">Logout</button>
             </form>
         </div>
         
         <!-- Add Items Form -->
         <form action="/items/add" method="post" class="item-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <label class="form-label">Add Items:</label>
             <input type="text" name="name" placeholder="Item Name" required style="width: 150px;">
             <input type="number" name="quantity" placeholder="Quantity" required style="width: 100px;">
@@ -46,7 +48,8 @@
             <% if (items && items.length > 0) { %>
                 <% items.forEach(item => { %>
                     <tr>
-                        <form action="/items/edit/<%= item.id %>" method="post" style="display: flex; align-items: center;">                            
+                        <form action="/items/edit/<%= item.id %>" method="post" style="display: flex; align-items: center;">  
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">                         
                             <td>
                                 <%= item.name %>
                             </td>

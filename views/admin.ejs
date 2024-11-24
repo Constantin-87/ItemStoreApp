@@ -32,10 +32,12 @@
                 <td>
                     <!-- Delete User Form -->
                     <form action="/admin/delete/<%= user.id %>" method="post" style="display:inline;">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit" class="delete-button">Delete</button>
                     </form>
                     <!-- Lock/Unlock User Form -->
                     <form action="/admin/toggle-lock/<%= user.id %>" method="post" style="display:inline;">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit">
                             <%= user.is_locked ? 'Unlock' : 'Lock' %>
                         </button>

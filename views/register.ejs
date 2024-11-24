@@ -10,6 +10,7 @@
     <div class="container">
         <h2>Register</h2>
         <form id="register-form" action="/register" method="post"  class="register-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <label for="email">Email</label>
             <input type="email" name="email" placeholder="Email" required style="width: 200px;">
             <label for="username">Username</label>
