@@ -1,6 +1,6 @@
 # **Item Store Management System** _(Insecure Version)_
 
-This branch contains the **insecure implementation** of the **Item Store Management System**. It is designed to demonstrate common vulnerabilities, including **SQL Injection**, **XSS (Cross-Site Scripting)**, and **Sensitive Data Exposure**, as part of a secure application development project.
+This branch contains the **insecure implementation** of the **Item Store Management System**. It is designed to demonstrate common vulnerabilities, including **SQL Injection**, **XSS (Cross-Site Scripting)**, and **Sensitive Data Exposure**, as part of my secure application development project.
 
 ---
 
