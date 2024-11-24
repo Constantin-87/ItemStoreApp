@@ -1,5 +1,6 @@
 const db = require("../database");
 const xss = require("xss");
+const validator = require("validator");
 
 // Utility function for handling database errors
 const handleDatabaseError = (err, res) => {

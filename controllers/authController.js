@@ -3,7 +3,9 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 
 exports.getLogin = (req, res) => {
-  res.render("login");
+  const message = req.query.message || null;
+  console.log("logout msg", message);
+  res.render("login", { message });
 };
 
 exports.postLogin = async (req, res) => {
@@ -35,10 +37,20 @@ exports.postLogin = async (req, res) => {
           db.run("UPDATE users SET failed_attempts = 0 WHERE email = ?", [
             email,
           ]);
-          req.session.userId = user.id;
-          req.session.username = user.username;
-          req.session.role = user.role;
-          return res.redirect("/items");
+
+          req.session.regenerate((err) => {
+            if (err) {
+              console.error("Session regeneration error:", err);
+              return res.status(500).send("Internal Server Error");
+            }
+
+            req.session.userId = user.id;
+            req.session.username = user.username;
+            req.session.role = user.role;
+
+            console.log("POST /login - New session created:", req.session);
+            return res.redirect("/items");
+          });
         } else {
           // Increment failed attempts if password is incorrect
           const newAttempts = user.failed_attempts + 1;

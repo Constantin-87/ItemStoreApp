@@ -8,6 +8,7 @@ const authRoutes = require("./routes/authRoute");
 const itemRoutes = require("./routes/itemsRoute");
 const adminRoutes = require("./routes/adminRoute");
 const { isAuthenticated, isAdmin } = require("./middleware/auth");
+const { handleSessionTimeout } = require("./middleware/sessions");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -19,9 +20,21 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, httpOnly: true },
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 1 * 20 * 1000, // 10 minutes
+    },
   })
 );
+app.use((req, res, next) => {
+  if (!["/login", "/register"].includes(req.path)) {
+    handleSessionTimeout(req, res, next);
+  } else {
+    next();
+  }
+});
 
 // Routes
 app.use("/", authRoutes);
