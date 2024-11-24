@@ -1,4 +1,5 @@
 const db = require("../database");
+const xss = require("xss");
 
 // Utility function for handling database errors
 const handleDatabaseError = (err, res) => {
@@ -27,11 +28,19 @@ exports.getItems = (req, res) => {
   });
 };
 
-// Add a new item or update the quantity if it already exists - Vulnerable Stored XSS
+// Add a new item or update the quantity if it already exists
 exports.addItem = (req, res) => {
   const { name, quantity } = req.body;
-  const parsedQuantity = parseInt(quantity, 10);
   const userId = req.session.userId;
+
+  if (
+    !validator.isLength(name, { min: 1, max: 100 }) ||
+    !validator.isInt(quantity, { min: 1 })
+  ) {
+    return res.status(400).send("Invalid input.");
+  }
+
+  const parsedQuantity = parseInt(quantity, 10);
 
   // Step 1: Check if the item with the given name already exists
   const query = `SELECT * FROM items WHERE name = ? AND user_id = ?`;
@@ -82,16 +91,18 @@ exports.deleteItem = (req, res) => {
   });
 };
 
-// Search items by name - // Vulnerable to both SQL Injection and Reflected XSS
+// Search items by name
 exports.searchItems = (req, res) => {
   const { query } = req.query;
   const userId = req.session.userId;
   const role = req.session.role;
 
-  const searchQuery = `SELECT * FROM items WHERE name LIKE '%${query}%' AND user_id = ${userId}`;
+  // Sanitize user input
+  query = xss(query);
 
-  db.all(searchQuery, [], (err, items) => {
-    // Handle the database error but still render the view with the search query
+  const searchQuery = "SELECT * FROM items WHERE name LIKE ? AND user_id = ?";
+  db.all(searchQuery, [`%${query}%`, userId], (err, items) => {
+    // Handle the database error
     if (err) {
       console.error("Database Error:", err.message);
       items = null;
@@ -102,7 +113,7 @@ exports.searchItems = (req, res) => {
       items: items || [],
       username: req.session.username,
       role,
-      query, // Reflecting the user input without sanitization
+      query, // Safe because it's sanitized
     });
   });
 };

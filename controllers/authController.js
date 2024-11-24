@@ -1,4 +1,5 @@
 const db = require("../database");
+const validator = require("validator");
 
 exports.getLogin = (req, res) => {
   res.render("login");
@@ -6,6 +7,12 @@ exports.getLogin = (req, res) => {
 
 exports.postLogin = (req, res) => {
   const { email, password } = req.body;
+
+  // Input validation
+  if (!validator.isEmail(email) || validator.isEmpty(password)) {
+    return res.status(400).send("Invalid input.");
+  }
+
   db.get("SELECT * FROM users WHERE email = ?", [email], (err, user) => {
     if (err) {
       // Sensitive data exposure
@@ -60,6 +67,15 @@ exports.getRegister = (req, res) => {
 
 exports.postRegister = (req, res) => {
   const { email, username, password } = req.body;
+
+  // Input validation
+  if (
+    !validator.isEmail(email) ||
+    !validator.isLength(username, { min: 3, max: 50 }) ||
+    !validator.isStrongPassword(password, { minLength: 8 })
+  ) {
+    return res.status(400).send("Invalid input.");
+  }
 
   // Default values for new users
   const role = "user"; // Assign default role as 'user'

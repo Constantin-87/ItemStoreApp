@@ -48,8 +48,7 @@
                     <tr>
                         <form action="/items/edit/<%= item.id %>" method="post" style="display: flex; align-items: center;">                            
                             <td>
-                                <!-- Vulnerable to Stored XSS -->
-                                <%- item.name %>
+                                <%= item.name %>
                             </td>
                             <td>
                                 <input type="number" name="quantity" value="<%= item.quantity %>" style="width: 100px;">
@@ -68,8 +67,7 @@
                 <% }) %>
                 <% } else if (query && query.trim() !== '') { %>
                     <tr>
-                        <!-- Vulnerable to Reflected XSS -->
-                        <td colspan="3">Could not find an item named "<%- query %>".</td>
+                        <td colspan="3">Could not find an item named "<%= query %>".</td>
                     </tr>
                 <% } %>
         </table>
