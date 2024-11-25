@@ -1,12 +1,16 @@
 const db = require("../database");
+const logger = require("../utils/logger");
 
-// Get all users
+// Fetch all users
 exports.getUsers = (req, res) => {
   db.all(
-    "SELECT id, username, role, is_locked FROM users",
-    [],
+    "SELECT id, username, email, role, is_locked FROM users",
     (err, users) => {
-      if (err) return res.status(500).send("Database Error");
+      if (err) {
+        logger.error(`Failed to fetch users: ${err.message}`);
+        return res.status(500).send("Database Error");
+      }
+      logger.info("Fetched all users for admin panel successfully.");
       res.render("admin", { users });
     }
   );
@@ -14,29 +18,49 @@ exports.getUsers = (req, res) => {
 
 // Delete user
 exports.deleteUser = (req, res) => {
-  const { id } = req.params;
-  db.run("DELETE FROM users WHERE id = ?", [id], (err) => {
-    if (err) return res.status(500).send("Database Error");
-    res.redirect("/admin/users");
+  const userId = req.params.id;
+  db.run("DELETE FROM users WHERE id = ?", [userId], (err) => {
+    if (err) {
+      logger.error(`Failed to delete user with ID ${id}: ${err.message}`);
+      return res.status(500).send("Database Error");
+    }
+    logger.info(`Deleted user with ID ${userId} successfully.`);
+    res.redirect("/admin");
   });
 };
 
 // Lock/Unlock user
 exports.toggleLock = (req, res) => {
-  const { id } = req.params;
-  db.get("SELECT is_locked FROM users WHERE id = ?", [id], (err, user) => {
-    if (err) return res.status(500).send("Database Error");
-    const newStatus = user.is_locked ? 0 : 1;
+  const userId = req.params.id;
+  db.get("SELECT is_locked FROM users WHERE id = ?", [userId], (err, user) => {
+    if (err) {
+      logger.error(
+        `Failed to fetch user with ID ${id} for lock/unlock: ${err.message}`
+      );
+      return res.status(500).send("Database Error");
+    }
 
-    // If unlocking the account, reset failed_attempts to 0
-    const updateQuery =
-      newStatus === 0
-        ? "UPDATE users SET is_locked = ?, failed_attempts = 0 WHERE id = ?"
-        : "UPDATE users SET is_locked = ? WHERE id = ?";
+    if (!user) {
+      logger.warn(`Attempt to toggle lock for non-existent user ID: ${userId}`);
+      return res.status(404).send("User not found");
+    }
 
-    db.run(updateQuery, [newStatus, id], (err) => {
-      if (err) return res.status(500).send("Database Error");
-      res.redirect("/admin/users");
-    });
+    const newLockStatus = user.is_locked ? 0 : 1;
+
+    db.run(
+      "UPDATE users SET is_locked = ? WHERE id = ?",
+      [newLockStatus, userId],
+      (err) => {
+        if (err) {
+          logger.error(
+            `Failed to update lock status for user ID: ${userId}: ${err.message}`
+          );
+          return res.status(500).send("Database Error: " + err.message);
+        }
+        const action = newLockStatus ? "locked" : "unlocked";
+        logger.info(`User ID: ${userId} has been ${action} successfully.`);
+        res.redirect("/admin");
+      }
+    );
   });
 };

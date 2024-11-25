@@ -1,13 +1,13 @@
 const db = require("../database");
 const xss = require("xss");
 const validator = require("validator");
+const logger = require("../utils/logger");
 
 // Utility function for handling database errors
 const handleDatabaseError = (err, res) => {
   if (err) {
-    console.error(err);
-    // Sensitive data exposure
-    return res.status(500).send(`Database Error: ${err.message}`);
+    logger.error(`Database Error: ${err.message}`);
+    return res.status(500).send("Database Error");
   }
 };
 
@@ -18,8 +18,11 @@ exports.getItems = (req, res) => {
   const query = `SELECT * FROM items WHERE user_id = ?`;
 
   db.all(query, [userId], (err, items) => {
-    handleDatabaseError(err, res);
-
+    if (err) {
+      handleDatabaseError(err, res);
+      return;
+    }
+    logger.info(`Fetched items for user ID: ${userId}`);
     res.render("home", {
       items,
       username: req.session.username,
@@ -39,6 +42,7 @@ exports.addItem = (req, res) => {
     !validator.isLength(name, { min: 1, max: 50 }) ||
     !validator.isInt(quantity, { min: 1 })
   ) {
+    logger.warn(`Invalid input while adding item for user ID: ${userId}`);
     return res.status(400).send("Invalid input.");
   }
 
@@ -47,23 +51,36 @@ exports.addItem = (req, res) => {
   // Step 1: Check if the item with the given name already exists
   const query = `SELECT * FROM items WHERE name = ? AND user_id = ?`;
   db.get(query, [name, userId], (err, existingItem) => {
-    handleDatabaseError(err, res);
+    if (err) {
+      handleDatabaseError(err, res);
+      return;
+    }
 
     if (existingItem) {
       // Step 2: If item exists, update its quantity
       const newQuantity = existingItem.quantity + parsedQuantity;
       const updateQuery = `UPDATE items SET quantity = ? WHERE id = ?`;
       db.run(updateQuery, [newQuantity, existingItem.id], (err) => {
-        console.error("Executing the update query:", updateQuery);
-        handleDatabaseError(err, res);
+        if (err) {
+          handleDatabaseError(err, res);
+          return;
+        }
+        logger.info(
+          `Updated item '${name}' for user ID: ${userId}, new quantity: ${newQuantity}`
+        );
         res.redirect("/items");
       });
     } else {
       // Step 3: If item does not exist, insert it as a new item
       const insertQuery = `INSERT INTO items (name, quantity, user_id) VALUES (?, ?, ?)`;
       db.run(insertQuery, [name, parsedQuantity, userId], (err) => {
-        console.error("Executing the insert query:", insertQuery);
-        handleDatabaseError(err, res);
+        if (err) {
+          handleDatabaseError(err, res);
+          return;
+        }
+        logger.info(
+          `Added new item '${name}' for user ID: ${userId}, quantity: ${parsedQuantity}`
+        );
         res.redirect("/items");
       });
     }
@@ -77,7 +94,13 @@ exports.editItem = (req, res) => {
   const userId = req.session.userId;
   const updateQuery = `UPDATE items SET name = ?, quantity = ? WHERE id = ? AND user_id = ?`;
   db.run(updateQuery, [name, quantity, id, userId], (err) => {
-    handleDatabaseError(err, res);
+    if (err) {
+      handleDatabaseError(err, res);
+      return;
+    }
+    logger.info(
+      `Edited item ID: ${id} for user ID: ${userId}, new name: '${name}', new quantity: ${quantity}`
+    );
     res.redirect("/items");
   });
 };
@@ -88,7 +111,11 @@ exports.deleteItem = (req, res) => {
   const userId = req.session.userId;
   const deleteQuery = `DELETE FROM items WHERE id = ? AND user_id = ?`;
   db.run(deleteQuery, [id, userId], (err) => {
-    handleDatabaseError(err, res);
+    if (err) {
+      handleDatabaseError(err, res);
+      return;
+    }
+    logger.info(`Deleted item ID: ${id} for user ID: ${userId}`);
     res.redirect("/items");
   });
 };
@@ -106,8 +133,16 @@ exports.searchItems = (req, res) => {
   db.all(searchQuery, [`%${query}%`, userId], (err, items) => {
     // Handle the database error
     if (err) {
-      console.error("Database Error:", err.message);
+      logger.error(
+        `Error searching for items for user ID: ${userId}, query: '${query}'`
+      );
       items = null;
+    } else {
+      logger.info(
+        `Searched for items for user ID: ${userId}, query: '${query}', found: ${
+          items?.length || 0
+        }`
+      );
     }
 
     // Render the home view with the search results

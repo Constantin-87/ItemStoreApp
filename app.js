@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 const https = require("https");
 const fs = require("fs");
+const logger = require("./utils/logger");
 
 const app = express();
 
@@ -73,6 +74,16 @@ app.use(
   })
 );
 
+// Log session initialization
+app.use((req, res, next) => {
+  if (req.session) {
+    logger.info(
+      `Session initialized for user: ${req.session.userId || "Guest"}`
+    );
+  }
+  next();
+});
+
 // Apply session timeout middleware to non-auth routes
 app.use((req, res, next) => {
   if (!["/login", "/register"].includes(req.path)) {
@@ -93,6 +104,7 @@ app.use(csrfProtection);
 app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
   next();
+  logger.info("CSRF token generated successfully.");
 });
 
 // Routes
@@ -103,8 +115,10 @@ app.use("/admin", isAuthenticated, isAdmin, adminRoutes);
 // Root route: Redirect based on authentication status
 app.get("/", (req, res) => {
   if (req.session.userId) {
+    logger.info(`User ${req.session.userId} accessed the root route.`);
     res.redirect("/items"); // Redirect to items page if logged in
   } else {
+    logger.info("Guest user accessed the root route, redirected to login.");
     res.redirect("/login"); // Redirect to login page if not logged in
   }
 });
@@ -112,6 +126,7 @@ app.get("/", (req, res) => {
 // Error-handling middleware for CSRF errors
 app.use((err, req, res, next) => {
   if (err.code === "EBADCSRFTOKEN") {
+    logger.error("CSRF token validation failed.");
     return res.status(403).send("CSRF token validation failed.");
   }
   next(err);
@@ -120,7 +135,7 @@ app.use((err, req, res, next) => {
 // CSP error handling
 app.use((err, req, res, next) => {
   if (err.message && err.message.includes("Content Security Policy")) {
-    console.error("CSP Violation:", err.message);
+    logger.error(`CSP Violation: ${err.message}`);
     res.status(400).send("Content Security Policy violation detected.");
   } else {
     next(err);
@@ -129,7 +144,7 @@ app.use((err, req, res, next) => {
 
 // Start HTTPS server
 https.createServer(options, app).listen(process.env.PORT, () => {
-  console.log(
+  logger.info(
     `Server is running securely on https://localhost:${process.env.PORT}`
   );
 });

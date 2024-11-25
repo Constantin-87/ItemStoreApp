@@ -118,6 +118,20 @@ input {
   border-radius: 4px;
 }
 
+/* Form Styling for Home Page */
+.item-form input[type="text"],
+.item-form input[type="number"] {
+  width: 150px; /* For text inputs */
+}
+
+.item-form input[name="quantity"] {
+  width: 100px; /* For number inputs */
+}
+
+.items-table input[type="number"] {
+  width: 100px; /* For quantity in the table */
+}
+
 button {
   padding: 10px;
   background-color: #007bff;
@@ -164,4 +178,49 @@ button:hover {
 
 .back-button:hover {
   background-color: #138496;
+}
+
+/* Add specific styles for input fields */
+.input-small {
+  width: 100px;
+}
+
+.input-medium {
+  width: 150px;
+}
+
+.input-large {
+  width: 200px;
+}
+
+/* Add styles for forms if needed */
+.inline-form {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  gap: 10px;
+}
+
+/* Header for Admin Panel */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Centered Heading for Admin Panel */
+.admin-header h2 {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+}
+
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+}
+.actions-cell form {
+  margin: 0;
 }

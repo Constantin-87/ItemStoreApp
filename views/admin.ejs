@@ -9,9 +9,9 @@
 <body>
     <div class="container-large">
         <!-- Header Section -->
-        <div class="header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-            <button class="back-button" onclick="window.history.back()">Back</button>
-            <h2 style="flex-grow: 1; text-align: center; margin: 0;">Administration Panel</h2>
+        <div class="header admin-header">
+            <a href="/items" class="back-button">Back</a>
+            <h2>Administration Panel</h2>
         </div>
 
         <!-- Users Table -->
@@ -29,14 +29,14 @@
                 <td><%= user.email %></td>
                 <td><%= user.role %></td>
                 <td><%= user.is_locked ? 'Locked' : 'Active' %></td>
-                <td>
+                <td class="actions-cell">
                     <!-- Delete User Form -->
-                    <form action="/admin/delete/<%= user.id %>" method="post" style="display:inline;">
+                    <form action="/admin/delete/<%= user.id %>" method="post" class="inline-form">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit" class="delete-button">Delete</button>
                     </form>
                     <!-- Lock/Unlock User Form -->
-                    <form action="/admin/toggle-lock/<%= user.id %>" method="post" style="display:inline;">
+                    <form action="/admin/toggle-lock/<%= user.id %>" method="post" class="inline-form">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit">
                             <%= user.is_locked ? 'Unlock' : 'Lock' %>

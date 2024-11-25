@@ -16,25 +16,25 @@
                 <a href="/admin" class="admin-button">Administration</a>
             <% } %>
 
-            <form action="/logout" method="post" style="display: inline;">
+            <form action="/logout" method="post" class="inline-form">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button type="submit" class="logout-button">Logout</button>
             </form>
         </div>
         
         <!-- Add Items Form -->
-        <form action="/items/add" method="post" class="item-form">
+        <form action="/items/add" method="post" class="item-form inline-form">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <label class="form-label">Add Items:</label>
-            <input type="text" name="name" placeholder="Item Name" required style="width: 150px;">
-            <input type="number" name="quantity" placeholder="Quantity" required style="width: 100px;">
+            <input type="text" name="name" placeholder="Item Name" class="input-medium">
+            <input type="number" name="quantity" placeholder="Quantity" class="input-small">
             <button type="submit">Add Item</button>
         </form>
 
         <!-- Search Bar -->
-        <form action="/items/search" method="get" class="item-form">
+        <form action="/items/search" method="get" class="item-form inline-form">
             <label class="form-label">Search Items:</label>
-            <input type="text" name="query" placeholder="Search by name" style="width: 200px;" value="<%= query %>">
+            <input type="text" name="query" placeholder="Search by name" class="input-large" value="<%= query %>">
             <button type="submit">Search</button>
         </form>
 
@@ -48,14 +48,14 @@
             <% if (items && items.length > 0) { %>
                 <% items.forEach(item => { %>
                     <tr>
-                        <form action="/items/edit/<%= item.id %>" method="post" style="display: flex; align-items: center;">  
+                        <form action="/items/edit/<%= item.id %>" method="post" class="inline-form">  
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <input type="hidden" name="name" value="<%= item.name %>">                       
                             <td>
                                 <%= item.name %>
                             </td>
                             <td>
-                                <input type="number" name="quantity" value="<%= item.quantity %>" style="width: 100px;">
+                                <input type="number" name="quantity" value="<%= item.quantity %>">
                             </td>
                             
                             <!-- Actions: Update and Delete buttons -->

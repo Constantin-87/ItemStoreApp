@@ -1,0 +1,232 @@
+{"level":"info","message":"Server is running securely on https://localhost:3000","timestamp":"2024-11-25T04:43:23.945Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:43:28.616Z"}
+{"level":"warn","message":"Session timeout check performed for unauthenticated user.","timestamp":"2024-11-25T04:43:28.616Z"}
+{"level":"info","message":"Guest user accessed the root route, redirected to login.","timestamp":"2024-11-25T04:43:28.618Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:43:28.621Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:43:28.628Z"}
+{"level":"info","message":"Accessed login page","timestamp":"2024-11-25T04:43:28.628Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:43:28.636Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:43:28.733Z"}
+{"level":"warn","message":"Session timeout check performed for unauthenticated user.","timestamp":"2024-11-25T04:43:28.733Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:43:28.734Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:43:57.746Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:43:57.752Z"}
+{"level":"info","message":"User test4@test.com successfully logged in.","timestamp":"2024-11-25T04:43:57.815Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:43:57.824Z"}
+{"level":"info","message":"Session activity initialized for user ID: 3","timestamp":"2024-11-25T04:43:57.825Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:43:57.825Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:43:57.825Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:43:57.826Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:43:57.826Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:43:57.827Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:44:09.229Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:44:09.229Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:44:09.230Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:44:09.231Z"}
+{"level":"warn","message":"Invalid input while adding item for user ID: 3","timestamp":"2024-11-25T04:44:09.233Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:44:09.234Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:44:23.684Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:44:23.685Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:44:23.686Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:44:23.687Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:44:23.688Z"}
+{"level":"info","message":"Added new item 'Banana' for user ID: 3, quantity: 1","timestamp":"2024-11-25T04:44:23.696Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:44:23.706Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:44:23.706Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:44:23.707Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:44:23.707Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:44:23.708Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:44:23.709Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:44:34.435Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:44:34.436Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:44:34.437Z"}
+{"level":"info","message":"Server is running securely on https://localhost:3000","timestamp":"2024-11-25T04:46:39.223Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:46:44.170Z"}
+{"level":"warn","message":"Session timeout check performed for unauthenticated user.","timestamp":"2024-11-25T04:46:44.170Z"}
+{"level":"warn","message":"Unauthorized access attempt to: /items","timestamp":"2024-11-25T04:46:44.172Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:46:44.175Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:46:44.180Z"}
+{"level":"info","message":"Accessed login page","timestamp":"2024-11-25T04:46:44.180Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:46:44.188Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:46:56.515Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:46:56.526Z"}
+{"level":"info","message":"User test4@test.com successfully logged in.","timestamp":"2024-11-25T04:46:56.616Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:46:56.626Z"}
+{"level":"info","message":"Session activity initialized for user ID: 3","timestamp":"2024-11-25T04:46:56.627Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:46:56.629Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:46:56.630Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:46:56.631Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:46:56.633Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:46:56.636Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:46:57.996Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:46:57.997Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:46:57.999Z"}
+{"level":"info","message":"User ID 3 logged out successfully.","timestamp":"2024-11-25T04:46:58.004Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:46:58.011Z"}
+{"level":"info","message":"Accessed login page","timestamp":"2024-11-25T04:46:58.012Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:46:58.015Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:47:01.226Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:01.228Z"}
+{"level":"info","message":"User test4@test.com successfully logged in.","timestamp":"2024-11-25T04:47:01.300Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:47:01.307Z"}
+{"level":"info","message":"Session activity initialized for user ID: 3","timestamp":"2024-11-25T04:47:01.308Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:47:01.308Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:01.309Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:01.310Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:01.311Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:47:01.312Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:47:11.719Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:47:11.720Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:11.721Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:11.722Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:11.723Z"}
+{"level":"info","message":"Added new item 'carrots' OR 1=1 AND ''='' for user ID: 3, quantity: 2","timestamp":"2024-11-25T04:47:11.734Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:47:11.745Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:47:11.747Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:11.748Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:11.748Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:11.750Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:47:11.752Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:47:24.204Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:47:24.205Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:24.205Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:24.206Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:24.207Z"}
+{"level":"info","message":"Searched for items for user ID: 3, query: 'tomato', found: 0","timestamp":"2024-11-25T04:47:24.208Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:47:28.030Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:47:28.031Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:28.032Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:28.033Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:28.035Z"}
+{"level":"info","message":"Searched for items for user ID: 3, query: 'banana', found: 1","timestamp":"2024-11-25T04:47:28.039Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:47:34.215Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:47:34.215Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:34.217Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:34.218Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:34.219Z"}
+{"level":"info","message":"Edited item ID: 14 for user ID: 3, new name: 'Banana', new quantity: 4","timestamp":"2024-11-25T04:47:34.226Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:47:34.238Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:47:34.238Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:34.239Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:47:34.239Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:34.240Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:47:34.241Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:47:59.254Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:47:59.255Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:59.257Z"}
+{"level":"info","message":"User ID 3 logged out successfully.","timestamp":"2024-11-25T04:47:59.259Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:47:59.273Z"}
+{"level":"info","message":"Accessed login page","timestamp":"2024-11-25T04:47:59.275Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:47:59.281Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:49:17.720Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:17.721Z"}
+{"level":"info","message":"User test4@test.com successfully logged in.","timestamp":"2024-11-25T04:49:17.833Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:49:17.842Z"}
+{"level":"info","message":"Session activity initialized for user ID: 3","timestamp":"2024-11-25T04:49:17.843Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:49:17.843Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:17.843Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:17.843Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:17.844Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:49:17.845Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:49:20.862Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:49:20.863Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:20.864Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:49:20.865Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:20.866Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:49:20.866Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:20.868Z"}
+{"level":"info","message":"Fetched all users for admin panel successfully.","timestamp":"2024-11-25T04:49:20.871Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:49:31.808Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:49:31.809Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:31.810Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:49:31.810Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:31.811Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:49:31.812Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:31.813Z"}
+{"level":"info","message":"User ID: 1 has been locked successfully.","timestamp":"2024-11-25T04:49:31.826Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:49:31.839Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:49:31.840Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:31.841Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:49:31.841Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:31.842Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:49:31.842Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:31.843Z"}
+{"level":"info","message":"Fetched all users for admin panel successfully.","timestamp":"2024-11-25T04:49:31.844Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:49:36.425Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:49:36.425Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:36.426Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:49:36.427Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:36.427Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:49:36.428Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:36.429Z"}
+{"level":"info","message":"Fetched all users for admin panel successfully.","timestamp":"2024-11-25T04:49:36.430Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:49:47.146Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:49:47.147Z"}
+{"level":"info","message":"User 3 accessed the root route.","timestamp":"2024-11-25T04:49:47.147Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:47.148Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:49:47.154Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:49:47.155Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:47.156Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:49:47.156Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:47.157Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:49:47.157Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:49:49.017Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:49:49.018Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:49.019Z"}
+{"level":"info","message":"User ID 3 logged out successfully.","timestamp":"2024-11-25T04:49:49.021Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:49:49.030Z"}
+{"level":"info","message":"Accessed login page","timestamp":"2024-11-25T04:49:49.031Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:49.033Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:49:55.283Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:49:55.284Z"}
+{"level":"warn","message":"Login attempt for locked account: test@test.com","timestamp":"2024-11-25T04:49:55.285Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:50:10.240Z"}
+{"level":"warn","message":"Session timeout check performed for unauthenticated user.","timestamp":"2024-11-25T04:50:10.240Z"}
+{"level":"warn","message":"Unauthorized access attempt to: /admin/toggle-lock/1","timestamp":"2024-11-25T04:50:10.241Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:10.243Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:50:10.249Z"}
+{"level":"info","message":"Accessed login page","timestamp":"2024-11-25T04:50:10.250Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:10.253Z"}
+{"level":"info","message":"Session initialized for user: Guest","timestamp":"2024-11-25T04:50:12.806Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:12.807Z"}
+{"level":"info","message":"User test4@test.com successfully logged in.","timestamp":"2024-11-25T04:50:12.879Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:50:12.887Z"}
+{"level":"info","message":"Session activity initialized for user ID: 3","timestamp":"2024-11-25T04:50:12.887Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:50:12.888Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:50:12.888Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:50:12.889Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:12.889Z"}
+{"level":"info","message":"Fetched items for user ID: 3","timestamp":"2024-11-25T04:50:12.890Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:50:14.604Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:50:14.605Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:50:14.606Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:50:14.607Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:50:14.607Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:50:14.608Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:14.609Z"}
+{"level":"info","message":"Fetched all users for admin panel successfully.","timestamp":"2024-11-25T04:50:14.614Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:50:15.610Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:50:15.610Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:50:15.611Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:50:15.612Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:50:15.613Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:50:15.613Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:15.615Z"}
+{"level":"info","message":"User ID: 1 has been unlocked successfully.","timestamp":"2024-11-25T04:50:15.637Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:50:15.673Z"}
+{"level":"info","message":"Session activity updated for user ID: 3","timestamp":"2024-11-25T04:50:15.674Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:50:15.676Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:50:15.677Z"}
+{"level":"info","message":"User ID: 3 authenticated successfully.","timestamp":"2024-11-25T04:50:15.678Z"}
+{"level":"info","message":"Admin access granted for user ID: 3","timestamp":"2024-11-25T04:50:15.678Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:15.680Z"}
+{"level":"info","message":"Fetched all users for admin panel successfully.","timestamp":"2024-11-25T04:50:15.683Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:50:18.303Z"}
+{"level":"info","message":"Accessed login page","timestamp":"2024-11-25T04:50:18.305Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:18.311Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:50:25.653Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:25.655Z"}
+{"level":"warn","message":"Incorrect password attempt for user test@test.com. Failed attempts: 1","timestamp":"2024-11-25T04:50:25.656Z"}
+{"level":"info","message":"Session initialized for user: 3","timestamp":"2024-11-25T04:50:28.776Z"}
+{"level":"info","message":"Accessed login page","timestamp":"2024-11-25T04:50:28.777Z"}
+{"level":"info","message":"CSRF token generated successfully.","timestamp":"2024-11-25T04:50:28.780Z"}
