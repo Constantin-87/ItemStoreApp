@@ -4,8 +4,17 @@ const session = require("express-session");
 const path = require("path");
 const csrf = require("csurf");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const https = require("https");
+const fs = require("fs");
 
 const app = express();
+
+// Load SSL certificates
+const options = {
+  key: fs.readFileSync(path.join(__dirname, "certs", "key.pem")), // Path to your SSL key
+  cert: fs.readFileSync(path.join(__dirname, "certs", "cert.pem")), // Path to your SSL certificate
+};
 
 // Routes
 const authRoutes = require("./routes/authRoute");
@@ -15,6 +24,35 @@ const adminRoutes = require("./routes/adminRoute");
 // Middleware
 const { isAuthenticated, isAdmin } = require("./middleware/auth");
 const { handleSessionTimeout } = require("./middleware/sessions");
+
+// Apply security headers using Helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "default-src": ["'self'"], // Restrict all content to the same origin
+        "script-src": ["'self'"], // Allow scripts only from the same origin
+        "style-src": ["'self'"], // Allow styles from the same origin
+        "img-src": ["'self'", "data:"], // Allow images from the same origin and inline data URIs
+        "font-src": ["'self'", "https:"], // Allow fonts from the same origin or secure sources
+        "object-src": ["'none'"], // Disallow <object>, <embed>, and <applet> tags
+        "frame-ancestors": ["'none'"], // Disallow framing of the site
+      },
+    },
+    crossOriginEmbedderPolicy: true,
+    referrerPolicy: { policy: "no-referrer" },
+  })
+);
+
+// Ensure HSTS is enabled for localhost HTTPS
+app.use(
+  helmet.hsts({
+    maxAge: 31536000, // 1 year
+    includeSubDomains: true,
+    preload: true,
+  })
+);
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -28,9 +66,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "strict",
-      maxAge: 1 * 20 * 1000, // 10 minutes
+      maxAge: 10 * 60 * 1000, // 10 minutes
     },
   })
 );
@@ -79,7 +117,19 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-// Start server
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on http://localhost:${process.env.PORT}`);
+// CSP error handling
+app.use((err, req, res, next) => {
+  if (err.message && err.message.includes("Content Security Policy")) {
+    console.error("CSP Violation:", err.message);
+    res.status(400).send("Content Security Policy violation detected.");
+  } else {
+    next(err);
+  }
+});
+
+// Start HTTPS server
+https.createServer(options, app).listen(process.env.PORT, () => {
+  console.log(
+    `Server is running securely on https://localhost:${process.env.PORT}`
+  );
 });

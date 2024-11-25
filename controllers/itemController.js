@@ -31,11 +31,12 @@ exports.getItems = (req, res) => {
 
 // Add a new item or update the quantity if it already exists
 exports.addItem = (req, res) => {
-  const { name, quantity } = req.body;
+  const name = xss(req.body.name);
+  const quantity = req.body.quantity;
   const userId = req.session.userId;
 
   if (
-    !validator.isLength(name, { min: 1, max: 100 }) ||
+    !validator.isLength(name, { min: 1, max: 50 }) ||
     !validator.isInt(quantity, { min: 1 })
   ) {
     return res.status(400).send("Invalid input.");
@@ -94,7 +95,7 @@ exports.deleteItem = (req, res) => {
 
 // Search items by name
 exports.searchItems = (req, res) => {
-  const { query } = req.query;
+  let { query } = req.query;
   const userId = req.session.userId;
   const role = req.session.role;
 

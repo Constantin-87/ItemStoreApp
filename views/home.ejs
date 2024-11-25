@@ -49,7 +49,8 @@
                 <% items.forEach(item => { %>
                     <tr>
                         <form action="/items/edit/<%= item.id %>" method="post" style="display: flex; align-items: center;">  
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">                         
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="name" value="<%= item.name %>">                       
                             <td>
                                 <%= item.name %>
                             </td>
