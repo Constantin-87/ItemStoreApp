@@ -7,8 +7,10 @@ exports.getUsers = (req, res) => {
     "SELECT id, username, email, role, is_locked FROM users",
     (err, users) => {
       if (err) {
-        logger.error(`Failed to fetch users: ${err.message}`);
-        return res.status(500).send("Database Error");
+        logger.error(`Failed to fetch users: ${err.stack || err.message}`);
+        return res
+          .status(500)
+          .send("An unexpected error occurred. Please try again later.");
       }
       logger.info("Fetched all users for admin panel successfully.");
       res.render("admin", { users });
@@ -21,8 +23,12 @@ exports.deleteUser = (req, res) => {
   const userId = req.params.id;
   db.run("DELETE FROM users WHERE id = ?", [userId], (err) => {
     if (err) {
-      logger.error(`Failed to delete user with ID ${id}: ${err.message}`);
-      return res.status(500).send("Database Error");
+      logger.error(
+        `Failed to delete user with ID ${userId}: ${err.stack || err.message}`
+      );
+      return res
+        .status(500)
+        .send("An unexpected error occurred. Please try again later.");
     }
     logger.info(`Deleted user with ID ${userId} successfully.`);
     res.redirect("/admin");
@@ -35,9 +41,13 @@ exports.toggleLock = (req, res) => {
   db.get("SELECT is_locked FROM users WHERE id = ?", [userId], (err, user) => {
     if (err) {
       logger.error(
-        `Failed to fetch user with ID ${id} for lock/unlock: ${err.message}`
+        `Failed to fetch user with ID ${userId} for lock/unlock: ${
+          err.stack || err.message
+        }`
       );
-      return res.status(500).send("Database Error");
+      return res
+        .status(500)
+        .send("An unexpected error occurred. Please try again later.");
     }
 
     if (!user) {
@@ -53,9 +63,13 @@ exports.toggleLock = (req, res) => {
       (err) => {
         if (err) {
           logger.error(
-            `Failed to update lock status for user ID: ${userId}: ${err.message}`
+            `Failed to update lock status for user ID ${userId}: ${
+              err.stack || err.message
+            }`
           );
-          return res.status(500).send("Database Error: " + err.message);
+          return res
+            .status(500)
+            .send("An unexpected error occurred. Please try again later.");
         }
         const action = newLockStatus ? "locked" : "unlocked";
         logger.info(`User ID: ${userId} has been ${action} successfully.`);

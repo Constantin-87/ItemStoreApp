@@ -32,13 +32,17 @@ app.use(
     contentSecurityPolicy: {
       useDefaults: true,
       directives: {
-        "default-src": ["'self'"], // Restrict all content to the same origin
+        "default-src": ["'self'"], // Allow only content from the same origin
         "script-src": ["'self'"], // Allow scripts only from the same origin
-        "style-src": ["'self'"], // Allow styles from the same origin
+        "style-src": ["'self'"], // Allow styles only from the same origin
         "img-src": ["'self'", "data:"], // Allow images from the same origin and inline data URIs
-        "font-src": ["'self'", "https:"], // Allow fonts from the same origin or secure sources
+        "font-src": ["'self'"], // Allow fonts from secure origins only
         "object-src": ["'none'"], // Disallow <object>, <embed>, and <applet> tags
-        "frame-ancestors": ["'none'"], // Disallow framing of the site
+        "frame-ancestors": ["'self'"], // Disallow framing entirely
+        "form-action": ["'self'"], // Ensure forms are submitted only to the same origin
+        "base-uri": ["'self'"], // Disallow `<base>` tags from pointing to external origins
+        "connect-src": ["'self'"], // Restrict AJAX and WebSocket connections to the same origin
+        "upgrade-insecure-requests": [], // Automatically upgrade HTTP requests to HTTPS
       },
     },
     crossOriginEmbedderPolicy: true,
@@ -97,7 +101,13 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 
 // Initialize CSRF protection
-const csrfProtection = csrf({ cookie: true });
+const csrfProtection = csrf({
+  cookie: {
+    httpOnly: true, // Prevent client-side JavaScript access
+    secure: true, // Ensure the cookie is sent only over HTTPS
+    sameSite: "strict", // Prevent cross-site request forgery attacks
+  },
+});
 app.use(csrfProtection);
 
 // Set CSRF token in locals for use in EJS templates
@@ -126,8 +136,8 @@ app.get("/", (req, res) => {
 // Error-handling middleware for CSRF errors
 app.use((err, req, res, next) => {
   if (err.code === "EBADCSRFTOKEN") {
-    logger.error("CSRF token validation failed.");
-    return res.status(403).send("CSRF token validation failed.");
+    logger.error(`CSRF token validation failed. Details: ${err.stack || err}`);
+    return res.status(403).send("Forbidden: Invalid CSRF token.");
   }
   next(err);
 });
@@ -140,6 +150,14 @@ app.use((err, req, res, next) => {
   } else {
     next(err);
   }
+});
+
+// Generic error-handling middleware for other errors
+app.use((err, req, res, next) => {
+  logger.error(
+    `Unhandled error occurred at ${req.path}. Details: ${err.stack || err}`
+  );
+  res.status(500).send("An unexpected error occurred. Please try again later.");
 });
 
 // Start HTTPS server

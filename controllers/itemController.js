@@ -4,10 +4,12 @@ const validator = require("validator");
 const logger = require("../utils/logger");
 
 // Utility function for handling database errors
-const handleDatabaseError = (err, res) => {
+const handleDatabaseError = (err, res, action = "performing operation") => {
   if (err) {
-    logger.error(`Database Error: ${err.message}`);
-    return res.status(500).send("Database Error");
+    logger.error(`Error ${action}: ${err.stack || err.message}`);
+    return res
+      .status(500)
+      .send("An unexpected error occurred. Please try again later.");
   }
 };
 
@@ -16,10 +18,11 @@ exports.getItems = (req, res) => {
   const userId = req.session.userId;
   const role = req.session.role;
   const query = `SELECT * FROM items WHERE user_id = ?`;
+  const errorMessage = req.query.errorMessage || null;
 
   db.all(query, [userId], (err, items) => {
     if (err) {
-      handleDatabaseError(err, res);
+      handleDatabaseError(err, res, "fetching items");
       return;
     }
     logger.info(`Fetched items for user ID: ${userId}`);
@@ -28,6 +31,7 @@ exports.getItems = (req, res) => {
       username: req.session.username,
       role,
       query: "",
+      errorMessage,
     });
   });
 };
@@ -43,7 +47,11 @@ exports.addItem = (req, res) => {
     !validator.isInt(quantity, { min: 1 })
   ) {
     logger.warn(`Invalid input while adding item for user ID: ${userId}`);
-    return res.status(400).send("Invalid input.");
+    return res.redirect(
+      `/items?errorMessage=${encodeURIComponent(
+        "Invalid input. Please check your item name and quantity."
+      )}`
+    );
   }
 
   const parsedQuantity = parseInt(quantity, 10);
@@ -52,7 +60,7 @@ exports.addItem = (req, res) => {
   const query = `SELECT * FROM items WHERE name = ? AND user_id = ?`;
   db.get(query, [name, userId], (err, existingItem) => {
     if (err) {
-      handleDatabaseError(err, res);
+      handleDatabaseError(err, res, "checking item existence");
       return;
     }
 
@@ -62,7 +70,7 @@ exports.addItem = (req, res) => {
       const updateQuery = `UPDATE items SET quantity = ? WHERE id = ?`;
       db.run(updateQuery, [newQuantity, existingItem.id], (err) => {
         if (err) {
-          handleDatabaseError(err, res);
+          handleDatabaseError(err, res, "updating item quantity");
           return;
         }
         logger.info(
@@ -75,7 +83,7 @@ exports.addItem = (req, res) => {
       const insertQuery = `INSERT INTO items (name, quantity, user_id) VALUES (?, ?, ?)`;
       db.run(insertQuery, [name, parsedQuantity, userId], (err) => {
         if (err) {
-          handleDatabaseError(err, res);
+          handleDatabaseError(err, res, "inserting new item");
           return;
         }
         logger.info(
@@ -95,8 +103,12 @@ exports.editItem = (req, res) => {
   const updateQuery = `UPDATE items SET name = ?, quantity = ? WHERE id = ? AND user_id = ?`;
   db.run(updateQuery, [name, quantity, id, userId], (err) => {
     if (err) {
-      handleDatabaseError(err, res);
-      return;
+      handleDatabaseError(err, res, "editing item");
+      return res.redirect(
+        `/items?errorMessage=${encodeURIComponent(
+          "Failed to edit item. Please try again later."
+        )}`
+      );
     }
     logger.info(
       `Edited item ID: ${id} for user ID: ${userId}, new name: '${name}', new quantity: ${quantity}`
@@ -112,8 +124,12 @@ exports.deleteItem = (req, res) => {
   const deleteQuery = `DELETE FROM items WHERE id = ? AND user_id = ?`;
   db.run(deleteQuery, [id, userId], (err) => {
     if (err) {
-      handleDatabaseError(err, res);
-      return;
+      handleDatabaseError(err, res, "deleting item");
+      return res.redirect(
+        `/items?errorMessage=${encodeURIComponent(
+          "Failed to delete item. Please try again later."
+        )}`
+      );
     }
     logger.info(`Deleted item ID: ${id} for user ID: ${userId}`);
     res.redirect("/items");
@@ -134,12 +150,14 @@ exports.searchItems = (req, res) => {
     // Handle the database error
     if (err) {
       logger.error(
-        `Error searching for items for user ID: ${userId}, query: '${query}'`
+        `Error searching items for user ID: ${userId}, query: '${query}': ${
+          err.stack || err.message
+        }`
       );
       items = null;
     } else {
       logger.info(
-        `Searched for items for user ID: ${userId}, query: '${query}', found: ${
+        `Searched items for user ID: ${userId}, query: '${query}', found: ${
           items?.length || 0
         }`
       );

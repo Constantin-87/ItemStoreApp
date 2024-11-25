@@ -4,10 +4,10 @@ const bcrypt = require("bcrypt");
 const logger = require("../utils/logger");
 
 exports.getLogin = (req, res) => {
-  const message = req.query.message || null;
+  const errorMessage = req.query.errorMessage || null;
   logger.info("Accessed login page");
-  if (message) logger.info(`Logout message displayed: ${message}`);
-  res.render("login", { message });
+  if (errorMessage) logger.info(`Logout message displayed: ${errorMessage}`);
+  res.render("login", { csrfToken: req.csrfToken(), errorMessage });
 };
 
 exports.postLogin = async (req, res) => {
@@ -22,9 +22,13 @@ exports.postLogin = async (req, res) => {
   db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
     if (err) {
       logger.error(
-        `Database error during login attempt for email ${email}: ${err.message}`
+        `Database error during login attempt for email ${email}: ${
+          err.stack || err.message
+        }`
       );
-      return res.status(500).send("Database Error");
+      return res
+        .status(500)
+        .send("An unexpected error occurred. Please try again later.");
     }
 
     if (user) {
@@ -47,7 +51,9 @@ exports.postLogin = async (req, res) => {
             (err) => {
               if (err)
                 logger.error(
-                  `Failed to reset failed_attempts for user ${email}: ${err.message}`
+                  `Failed to reset failed_attempts for user ${email}: ${
+                    err.stack || err.message
+                  }`
                 );
             }
           );
@@ -55,9 +61,13 @@ exports.postLogin = async (req, res) => {
           req.session.regenerate((err) => {
             if (err) {
               logger.error(
-                `Session regeneration error for user ${email}: ${err.message}`
+                `Session regeneration error for user ${email}: ${
+                  err.stack || err.message
+                }`
               );
-              return res.status(500).send("Internal Server Error");
+              return res
+                .status(500)
+                .send("An unexpected error occurred. Please try again later.");
             }
 
             req.session.userId = user.id;
@@ -78,7 +88,9 @@ exports.postLogin = async (req, res) => {
               [newAttempts, email],
               (err) => {
                 if (err)
-                  logger.error(`Failed to lock user ${email}: ${err.message}`);
+                  logger.error(
+                    `Failed to lock user ${email}: ${err.stack || err.message}`
+                  );
               }
             );
             logger.warn(
@@ -95,25 +107,33 @@ exports.postLogin = async (req, res) => {
               (err) => {
                 if (err)
                   logger.error(
-                    `Failed to update failed_attempts for user ${email}: ${err.message}`
+                    `Failed to update failed_attempts for user ${email}: ${
+                      err.stack || err.message
+                    }`
                   );
               }
             );
             logger.warn(
               `Incorrect password attempt for user ${email}. Failed attempts: ${newAttempts}`
             );
-            return res.status(401).send("Unauthorized: Incorrect password.");
+            return res
+              .status(401)
+              .send("Unauthorized: Incorrect email or password.");
           }
         }
       } catch (error) {
         logger.error(
-          `Error verifying password for user ${email}: ${error.message}`
+          `Error verifying password for user ${email}: ${
+            error.stack || error.message
+          }`
         );
-        return res.status(500).send("Internal Server Error");
+        return res
+          .status(500)
+          .send("An unexpected error occurred. Please try again later.");
       }
     } else {
       logger.warn(`Login attempt with unregistered email: ${email}`);
-      return res.status(401).send("Unauthorized: Email not found.");
+      return res.status(401).send("Unauthorized: Incorrect email or password.");
     }
   });
 };
@@ -152,8 +172,12 @@ exports.postRegister = async (req, res) => {
       [email, username, hashedPassword, role, locked],
       (err) => {
         if (err) {
-          logger.error(`Failed to register user ${email}: ${err.message}`);
-          return res.status(500).send("Database Error");
+          logger.error(
+            `Failed to register user ${email}: ${err.stack || err.message}`
+          );
+          return res
+            .status(500)
+            .send("An unexpected error occurred. Please try again later.");
         }
         logger.info(`User ${email} registered successfully.`);
         // If registration is successful, automatically log in the user
@@ -163,9 +187,13 @@ exports.postRegister = async (req, res) => {
           (err, user) => {
             if (err) {
               logger.error(
-                `Database error during post-registration login for user ${email}: ${err.message}`
+                `Database error during post-registration login for user ${email}: ${
+                  err.stack || err.message
+                }`
               );
-              return res.status(500).send("Database Error");
+              return res
+                .status(500)
+                .send("An unexpected error occurred. Please try again later.");
             }
             if (user) {
               req.session.userId = user.id;
@@ -182,8 +210,14 @@ exports.postRegister = async (req, res) => {
       }
     );
   } catch (error) {
-    logger.error(`Error hashing password for user ${email}: ${error.message}`);
-    res.status(500).send("Internal Server Error");
+    logger.error(
+      `Error hashing password for user ${email}: ${
+        error.stack || error.message
+      }`
+    );
+    res
+      .status(500)
+      .send("An unexpected error occurred. Please try again later.");
   }
 };
 
@@ -192,7 +226,9 @@ exports.logout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       logger.error(
-        `Error destroying session for user ID ${userId}: ${err.message}`
+        `Error destroying session for user ID ${userId}: ${
+          err.stack || err.message
+        }`
       );
     } else {
       logger.info(`User ID ${userId} logged out successfully.`);

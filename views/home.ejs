@@ -21,6 +21,13 @@
                 <button type="submit" class="logout-button">Logout</button>
             </form>
         </div>
+
+        <!-- Display error message -->
+        <% if (errorMessage) { %>
+            <div class="alert alert-warning">
+              <%= errorMessage %>
+            </div>
+        <% } %>
         
         <!-- Add Items Form -->
         <form action="/items/add" method="post" class="item-form inline-form">

@@ -15,13 +15,19 @@ exports.handleSessionTimeout = (req, res, next) => {
     if (Date.now() - req.session.lastActivity > sessionTimeout) {
       logger.warn(`Session timed out for user ID: ${req.session.userId}`);
       const message = "Session expired. Please log in again.";
+      const userId = req.session.userId;
       req.session.destroy((err) => {
         if (err) {
           logger.error(
-            `Error destroying session for user ID ${req.session.userId}: ${err.message}`
+            `Error destroying session for user ID ${userId}: ${err.message}`
           );
+          return res
+            .status(500)
+            .send(
+              "An error occurred while ending the session. Please try again."
+            );
         }
-        res.redirect(`/login?message=${encodeURIComponent(message)}`);
+        res.redirect(`/login?errorMessage=${encodeURIComponent(message)}`);
       });
       return;
     }
@@ -30,7 +36,9 @@ exports.handleSessionTimeout = (req, res, next) => {
     req.session.lastActivity = Date.now();
     logger.info(`Session activity updated for user ID: ${req.session.userId}`);
   } else {
-    logger.warn(`Session timeout check performed for unauthenticated user.`);
+    logger.warn(
+      `Session timeout check performed for unauthenticated request from IP: ${req.ip}`
+    );
   }
   next();
 };

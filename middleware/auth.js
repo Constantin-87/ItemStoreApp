@@ -6,8 +6,11 @@ exports.isAuthenticated = (req, res, next) => {
     logger.info(`User ID: ${req.session.userId} authenticated successfully.`);
     return next();
   }
-  logger.warn(`Unauthorized access attempt to: ${req.originalUrl}`);
-  res.redirect("/login");
+  logger.warn(
+    `Unauthorized access attempt to: ${req.originalUrl} from IP: ${req.ip}`
+  );
+  const message = "Unauthorized access. Please log in.";
+  res.redirect(`/login?errorMessage=${encodeURIComponent(message)}`);
 };
 
 // Middleware to check if a user is an admin
@@ -17,7 +20,8 @@ exports.isAdmin = (req, res, next) => {
     return next();
   }
   logger.warn(
-    `Access denied for non-admin user ID: ${req.session.userId} to route: ${req.originalUrl}`
+    `Access denied for non-admin user ID: ${req.session.userId} to route: ${req.originalUrl} from IP: ${req.ip}`
   );
-  res.status(403).send("Access Denied: Admins only");
+  const message = "Access Denied: Admins only.";
+  res.redirect(`/login?errorMessage=${encodeURIComponent(message)}`);
 };
