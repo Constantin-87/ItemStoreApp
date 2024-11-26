@@ -38,9 +38,9 @@ app.use(
         "img-src": ["'self'", "data:"], // Allow images from the same origin and inline data URIs
         "font-src": ["'self'"], // Allow fonts from secure origins only
         "object-src": ["'none'"], // Disallow <object>, <embed>, and <applet> tags
-        "frame-ancestors": ["'self'"], // Disallow framing entirely
+        "frame-ancestors": ["'self'"],
         "form-action": ["'self'"], // Ensure forms are submitted only to the same origin
-        "base-uri": ["'self'"], // Disallow `<base>` tags from pointing to external origins
+        "base-uri": ["'self'"],
         "connect-src": ["'self'"], // Restrict AJAX and WebSocket connections to the same origin
         "upgrade-insecure-requests": [], // Automatically upgrade HTTP requests to HTTPS
       },
