@@ -154,14 +154,19 @@ exports.searchItems = (req, res) => {
           err.stack || err.message
         }`
       );
-      items = null;
-    } else {
-      logger.info(
-        `Searched items for user ID: ${userId}, query: '${query}', found: ${
-          items?.length || 0
-        }`
-      );
+      return res.render("home", {
+        items: [],
+        username: req.session.username,
+        role,
+        query,
+        errorMessage: "An unexpected error occurred while searching items.",
+      });
     }
+    logger.info(
+      `Searched items for user ID: ${userId}, query: '${query}', found: ${
+        items?.length || 0
+      }`
+    );
 
     // Render the home view with the search results
     res.render("home", {
@@ -169,6 +174,7 @@ exports.searchItems = (req, res) => {
       username: req.session.username,
       role,
       query, // Safe because it's sanitized
+      errorMessage: null,
     });
   });
 };

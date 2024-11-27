@@ -147,13 +147,31 @@ exports.postRegister = async (req, res) => {
   const { email, username, password } = req.body;
 
   // Input validation
-  if (
-    !validator.isEmail(email) ||
-    !validator.isLength(username, { min: 3, max: 50 }) ||
-    !validator.isStrongPassword(password, { minLength: 8 })
-  ) {
-    logger.warn(`Invalid registration attempt for email: ${email}`);
-    return res.status(400).send("Invalid input.");
+  if (!validator.isEmail(email)) {
+    logger.warn(`Invalid email during registration attempt: ${email}`);
+    return res
+      .status(400)
+      .send("Invalid email address. Please enter a valid email.");
+  }
+
+  if (!/^[a-zA-Z._]{3,25}$/.test(username)) {
+    logger.warn(`Invalid username during registration attempt: ${username}`);
+    return res
+      .status(400)
+      .send(
+        "Invalid username. Username must be 3-25 characters long and can only include letters, underscores, or periods."
+      );
+  }
+
+  if (!validator.isStrongPassword(password, { minLength: 8 })) {
+    logger.warn(
+      `Weak password during registration attempt for email: ${email}`
+    );
+    return res
+      .status(400)
+      .send(
+        "Weak password. Password must be at least 8 characters long and include uppercase letters, lowercase letters, numbers, and special characters."
+      );
   }
 
   try {
@@ -172,6 +190,16 @@ exports.postRegister = async (req, res) => {
       [email, username, hashedPassword, role, locked],
       (err) => {
         if (err) {
+          if (err.code === "SQLITE_CONSTRAINT") {
+            // Handle unique constraint error for email
+            logger.warn(`Registration attempt with existing email: ${email}`);
+            return res
+              .status(400)
+              .send(
+                "The email address is already in use. Please try a different one."
+              );
+          }
+
           logger.error(
             `Failed to register user ${email}: ${err.stack || err.message}`
           );
