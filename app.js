@@ -29,24 +29,23 @@ const { handleSessionTimeout } = require("./middleware/sessions");
 // Apply security headers using Helmet
 app.use(
   helmet({
+    // Configure Content Security Policy (CSP) to restrict resources and mitigate XSS
     contentSecurityPolicy: {
-      useDefaults: true,
+      useDefaults: true, // Use Helmet's default secure CSP configuration
       directives: {
-        "default-src": ["'self'"], // Allow only content from the same origin
-        "script-src": ["'self'"], // Allow scripts only from the same origin
-        "style-src": ["'self'"], // Allow styles only from the same origin
-        "img-src": ["'self'", "data:"], // Allow images from the same origin and inline data URIs
-        "font-src": ["'self'"], // Allow fonts from secure origins only
-        "object-src": ["'none'"], // Disallow <object>, <embed>, and <applet> tags
-        "frame-ancestors": ["'self'"],
-        "form-action": ["'self'"], // Ensure forms are submitted only to the same origin
-        "base-uri": ["'self'"],
-        "connect-src": ["'self'"], // Restrict AJAX and WebSocket connections to the same origin
-        "upgrade-insecure-requests": [], // Automatically upgrade HTTP requests to HTTPS
+        "default-src": ["'self'"], // Restrict all content (scripts, styles, etc.) to the same origin by default
+        "object-src": ["'none'"], // Block the use of <object>, <embed>, and <applet> tags to prevent plugin-based attacks
+        "frame-ancestors": ["'self'"], // Prevent the page from being embedded in frames by external sites (mitigates clickjacking)
+        "form-action": ["'self'"], // Ensure forms can only be submitted to the same origin
+        "base-uri": ["'self'"], // Restrict the use of <base> tag to the same origin
+        "connect-src": ["'self'"], // Allow only same-origin connections for AJAX or WebSocket requests
+        "upgrade-insecure-requests": [], // Automatically upgrade HTTP requests to HTTPS (enabled for browsers that support it)
       },
     },
+    // Enforce Cross-Origin Embedder Policy to mitigate speculative attacks like Spectre
     crossOriginEmbedderPolicy: true,
-    referrerPolicy: { policy: "no-referrer" },
+    // Configure Referrer-Policy to avoid leaking sensitive data through the Referer header
+    referrerPolicy: { policy: "no-referrer" }, // No referrer information is sent with requests
   })
 );
 

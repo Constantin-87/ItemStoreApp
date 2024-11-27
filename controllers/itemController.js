@@ -43,7 +43,7 @@ exports.addItem = (req, res) => {
   const userId = req.session.userId;
 
   if (
-    !validator.isLength(name, { min: 1, max: 50 }) ||
+    !validator.isLength(name, { min: 1, max: 30 }) ||
     !validator.isInt(quantity, { min: 1 })
   ) {
     logger.warn(`Invalid input while adding item for user ID: ${userId}`);
